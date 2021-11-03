@@ -6,5 +6,7 @@
 >
 <!-- XML 이 어떤interface 와 연결이 되는가? -->
 <mapper namespace="com.hong.blog.dao.BoardDAO">
-
+	<select id="getPostList" resultType="com.hong.blog.dto.BoardDTO">
+		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post
+	</select>
 </mapper>
