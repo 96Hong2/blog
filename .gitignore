@@ -1,0 +1,4 @@
+.settings/
+target/classes/log4j.xml
+target/
+.project
