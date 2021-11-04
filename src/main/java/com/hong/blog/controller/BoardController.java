@@ -25,9 +25,21 @@ public class BoardController {
 	@Autowired BoardService service;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String Home() {
+		return "home";
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getPostList(Model model) {
 		ArrayList<BoardDTO> list = service.getPostList();
 		model.addAttribute("list", list);
-		return "home";
+		return "list";
 	}
+	
+	@RequestMapping(value = "/writeForm", method = RequestMethod.GET)
+	public String writeForm() {
+		return "writeForm";
+	}
+	
+	
 }

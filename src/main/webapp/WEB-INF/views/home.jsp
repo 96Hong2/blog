@@ -5,38 +5,9 @@
 <head>
 	<title>Welcome! Hong's Blog</title>
 	<c:set var="path" value="${pageContext.request.contextPath}" />
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="home.css">
     <link href="${path}/resources/css/home.css" rel="stylesheet">
 </head> 
 <body>
-
-<%-- <table>
-        <thead>
-            <tr>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>작성날짜</th>
-                <th>조회수</th>
-                <th>작성자</th>
-                <th>카테고리</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${list}" var="item">
-                <tr>
-                    <td>${item.postId}</td>
-                    <td>${item.title}</td>
-                    <td>${item.postContent}</td>
-                    <td>${item.regDate}</td>
-                    <td>${item.hits}</td>
-                    <td>${item.userId}</td>
-                    <td>${item.categoryId}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table> --%>
 
 <div class="wrap">
       <div class="intro_bg">
@@ -49,7 +20,7 @@
           </div>
           <ul class="nav">
             <li><a href="#">HOME</a></li>
-            <li><a href="#">DIARY</a></li>
+            <li><a href="list">DIARY</a></li>
             <li><a href="#">DEV</a></li>
             <li><a href="#">GAME</a></li>
           </ul>
