@@ -13,4 +13,6 @@ public interface BoardDAO {
 
 	int write(String title, String userId, String content);
 
+	BoardDTO detail(int postId);
+
 }

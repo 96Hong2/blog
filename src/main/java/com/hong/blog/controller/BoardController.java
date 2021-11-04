@@ -66,4 +66,12 @@ public class BoardController {
 		return service.write(rAttr, param);
 	}
 	
+	//게시글 상세보기 메소드
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail(Model model, @RequestParam int postId) {
+		logger.info("게시글 상세보기 요청 : "+postId);
+		BoardDTO dto = service.detail(model, postId);
+		model.addAttribute("post", dto);
+		return "detail";
+	}
 }

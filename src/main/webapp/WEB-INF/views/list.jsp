@@ -17,7 +17,6 @@
             <tr>
                 <th>글번호</th>
                 <th>제목</th>
-                <th>내용</th>
                 <th>작성날짜</th>
                 <th>조회수</th>
                 <th>작성자</th>
@@ -29,8 +28,7 @@
             <c:forEach items="${list}" var="item">
                 <tr>
                     <td>${item.postId}</td>
-                    <td>${item.title}</td>
-                    <td>${item.postContent}</td>
+                    <td><a href="detail?postId=${item.postId}">${item.title}</a></td>
                     <td>${item.regDate}</td>
                     <td>${item.hits}</td>
                     <td>${item.userId}</td>

@@ -48,4 +48,8 @@ public class BoardService {
 		return "redirect:/list";
 	}
 
+	public BoardDTO detail(Model model, int postId) {
+		return dao.detail(postId);
+	}
+
 }

@@ -18,4 +18,8 @@
 		INSERT INTO post(postId, title, postContent, userId, categoryId) 
 		VALUES(get_seq('post'), #{param1}, #{param3}, #{param2}, 5)
 	</insert>
+	
+	<select id="detail" resultType="com.hong.blog.dto.BoardDTO">
+		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post WHERE postId=#{param1}
+	</select>
 </mapper>
