@@ -42,6 +42,10 @@
     </table>
 </body>
 <script>
+	var msg = "${msg}";
+	if(msg != ""){
+		alert(msg);
+	}
 
 	$(".del_btn").hide();
 

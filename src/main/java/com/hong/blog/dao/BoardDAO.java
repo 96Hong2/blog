@@ -11,4 +11,6 @@ public interface BoardDAO {
 
 	int delPost(int postId);
 
+	int write(String title, String userId, String content);
+
 }
