@@ -55,19 +55,23 @@
 
 	function del(postId){
 		if(confirm("글을 삭제하시겠습니까?") == true){
-			alert(postId+" 번 글 제거!");
-			/* $.ajax({
-	               url:'delPost',
-	               type:'GET',
-	               data : {"postId" : postId},
-	               dataType:'JSON',
-	               success:function(data){
-	                              
-	               },
-	               error:function(e){
-	                  console.log("에러발생 : ", e);
-	               }               
-	            }); */
+			$.ajax({
+				url:'delPost',
+	            type:'GET',
+	            data : {"postId" : postId},
+	            dataType:'JSON',
+	            success:function(data){
+	                 if(data.success > 0){
+	                	 alert("글 삭제가 완료되었습니다.");
+	                	 location.reload(true);
+	                 }else{
+	                	 alert("글 삭제에 실패했습니다.");
+	                 }
+	            },
+	            error:function(e){
+	               console.log("에러발생 : ", e);
+	            }
+	       	});
 		}else{
 			return;
 		}

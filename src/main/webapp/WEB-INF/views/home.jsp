@@ -21,8 +21,8 @@
           <ul class="nav">
             <li><a href="#">HOME</a></li>
             <li><a href="list">DIARY</a></li>
-            <li><a href="#">DEV</a></li>
-            <li><a href="#">GAME</a></li>
+            <li><a href="list">DEV</a></li>
+            <li><a href="list">GAME</a></li>
           </ul>
         </div>
         <div class="intro_text">

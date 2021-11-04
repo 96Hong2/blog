@@ -9,4 +9,8 @@
 	<select id="getPostList" resultType="com.hong.blog.dto.BoardDTO">
 		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post
 	</select>
+	
+	<delete id="delPost">
+		DELETE FROM post WHERE postId=#{param1}
+	</delete>
 </mapper>
