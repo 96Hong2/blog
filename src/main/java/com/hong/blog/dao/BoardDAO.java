@@ -17,4 +17,6 @@ public interface BoardDAO {
 
 	int update(int postId, String title, String postContent);
 
+	int upHits(int postId);
+
 }

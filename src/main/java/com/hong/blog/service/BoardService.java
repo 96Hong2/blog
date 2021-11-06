@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -48,7 +49,10 @@ public class BoardService {
 		return "redirect:/list";
 	}
 
+	@Transactional
 	public BoardDTO detail(Model model, int postId) {
+		int success = dao.upHits(postId);
+		logger.info("조회수 올리기 성공 여부 : "+success);
 		return dao.detail(postId);
 	}
 

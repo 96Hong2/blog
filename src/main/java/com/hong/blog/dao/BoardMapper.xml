@@ -26,4 +26,8 @@
 	<update id="update">
 		UPDATE post SET title=#{param2}, postContent=#{param3} WHERE postId=#{param1}
 	</update>
+	
+	<update id="upHits" parameterType="int">
+		UPDATE post SET hits=hits+1 WHERE postId=#{postId}
+	</update>
 </mapper>
