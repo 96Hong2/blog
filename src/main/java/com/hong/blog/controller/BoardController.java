@@ -74,4 +74,29 @@ public class BoardController {
 		model.addAttribute("post", dto);
 		return "detail";
 	}
+	
+	//게시글 수정 폼 보기 메소드
+	@RequestMapping(value = "/updateForm", method = RequestMethod.GET)
+	public String updateForm(Model model, @RequestParam int postId) {
+		logger.info("게시글 수정 폼 요청 : "+postId);
+		BoardDTO dto = service.detail(model, postId);
+		model.addAttribute("post", dto);
+		return "updateForm";
+	}
+	
+	//게시글 수정 메소드
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(RedirectAttributes rAttr, @RequestParam int postId, @RequestParam String title, @RequestParam String postContent) {
+		logger.info("게시글 수정 요청 : 번호/제목/내용 "+postId+"/"+title+"/"+postContent);
+		int success = service.update(postId, title, postContent);
+		logger.info("success : "+success);
+		String msg = "게시글 수정에 실패했습니다.";
+		if(success > 0) {
+			msg = "게시글 수정이 완료되었습니다.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		return "redirect:/detail?postId="+postId;
+	}
+	
+	
 }

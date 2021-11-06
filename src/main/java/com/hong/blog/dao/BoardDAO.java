@@ -15,4 +15,6 @@ public interface BoardDAO {
 
 	BoardDTO detail(int postId);
 
+	int update(int postId, String title, String postContent);
+
 }

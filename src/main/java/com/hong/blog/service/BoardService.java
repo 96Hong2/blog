@@ -52,4 +52,8 @@ public class BoardService {
 		return dao.detail(postId);
 	}
 
+	public int update(int postId, String title, String postContent) {
+		return dao.update(postId, title, postContent);
+	}
+
 }

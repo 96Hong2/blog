@@ -42,7 +42,7 @@
 		<tr>
 			<td colspan = "2">
 				<button onclick="location.href='./list'">리스트</button>
-				<button onclick="location.href='./updateForm?idx=${post.postId}'">수정</button>
+				<button onclick="location.href='./updateForm?postId=${post.postId}'">수정</button>
 			</td>
 		</tr>
 	</table>

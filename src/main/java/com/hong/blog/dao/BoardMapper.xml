@@ -22,4 +22,8 @@
 	<select id="detail" resultType="com.hong.blog.dto.BoardDTO">
 		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post WHERE postId=#{param1}
 	</select>
+	
+	<update id="update">
+		UPDATE post SET title=#{param2}, postContent=#{param3} WHERE postId=#{param1}
+	</update>
 </mapper>
