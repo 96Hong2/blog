@@ -11,12 +11,13 @@ public interface BoardDAO {
 
 	int delPost(int postId);
 
-	int write(String title, String userId, String content);
+	int write(BoardDTO dto);
 
 	BoardDTO detail(int postId);
 
 	int update(int postId, String title, String postContent);
 
 	int upHits(int postId);
+
 
 }

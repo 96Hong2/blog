@@ -14,9 +14,12 @@
 		DELETE FROM post WHERE postId=#{param1}
 	</delete>
 	
-	<insert id="write">
+	<insert id="write" parameterType="com.hong.blog.dto.BoardDTO">
 		INSERT INTO post(postId, title, postContent, userId, categoryId) 
-		VALUES(get_seq('post'), #{param1}, #{param3}, #{param2}, 5)
+		VALUES(get_seq('post'), #{title}, #{postContent}, #{userId}, 5)
+		<selectKey resultType="int" keyProperty="postId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<select id="detail" resultType="com.hong.blog.dto.BoardDTO">

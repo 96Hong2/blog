@@ -36,17 +36,22 @@ public class BoardService {
 
 	public String write(RedirectAttributes rAttr, HashMap<String, String> param) {
 		String msg = "게시글 작성에 실패했습니다.";
-		String title = param.get("title");
-		String userId = param.get("userId");
-		String content = param.get("content");
-		logger.info("title/userId/content : "+title+"/"+userId+"/"+content);
-		int success = dao.write(title, userId, content);
-		logger.info("success : {}", success);
+		String page = "redirect:/list";
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setTitle(param.get("title"));
+		dto.setUserId(param.get("userId"));
+		dto.setPostContent(param.get("content"));
+		logger.info("title/userId/content : "+dto.getTitle()+"/"+dto.getUserId()+"/"+dto.getPostContent());
+		
+		int success = dao.write(dto);
+		logger.info("success/postId : "+ success+" / "+dto.getPostId());
 		if(success > 0) {
 			msg = "게시글 작성이 완료되었습니다.";
+			page = "redirect:/detail?postId="+dto.getPostId(); 
 		}
 		rAttr.addFlashAttribute("msg", msg);
-		return "redirect:/list";
+		return page;
 	}
 
 	@Transactional
