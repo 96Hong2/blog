@@ -52,11 +52,16 @@ public class BoardController {
 	//게시글의 번호를 받아 해당 게시글을 삭제하는 메소드
 	@RequestMapping(value = "/delPost", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Object> delPost(@RequestParam String postId) {
-		logger.info("게시글 삭제 요청");
-		int pId = Integer.parseInt(postId);
-		logger.info("pId : {}", pId);
-		return service.delPost(pId);
+	public HashMap<String, Object> delPost(@RequestParam String[] delArr) {
+		logger.info("게시글 삭제 요청 : "+delArr);
+		ArrayList<Integer> delList = null;
+		for(String postId : delArr) {
+			int pId = Integer.parseInt(postId);
+			logger.info("pId : {}", pId);
+			delList.add(pId);
+		}
+		logger.info("delList 크기 : "+delList.size());
+		return service.delPost(delList);
 	}
 	
 	//게시글을 작성하는 메소드

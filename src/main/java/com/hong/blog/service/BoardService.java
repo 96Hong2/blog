@@ -26,9 +26,10 @@ public class BoardService {
 		return dao.getPostList();
 	}
 
-	public HashMap<String, Object> delPost(int postId) {
+	public HashMap<String, Object> delPost(ArrayList<Integer> delList) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int success = dao.delPost(postId);
+		int success = delList.get(0);
+		//int success = dao.delPost(delList);
 		logger.info("success : {}",success);
 		map.put("success", success);
 		return map;

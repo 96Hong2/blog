@@ -10,8 +10,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 	<button id="write_btn" type="button" onclick="location.href='writeForm'">글쓰기</button>
-	<button id="delete_btn" type="button" onclick="getDelBtn()">포스팅 삭제</button>
-	<button class="del_btn" type="button" onclick="cancel_del()">취소</button>
+	<button id="get_del_btn" type="button" onclick="getDelBtn()">포스팅 삭제</button>
+	<button id="delete_btn" type="button" onclick="delPost()">선택삭제</button>
+	<button id="cancel_btn" type="button" onclick="cancel_del()">취소</button>
 	<table>
         <thead>
             <tr>
@@ -33,7 +34,7 @@
                     <td>${item.hits}</td>
                     <td>${item.userId}</td>
                     <td>${item.categoryId}</td>
-                    <td class="del_btn"><a href="javascript:del('${item.postId}')">삭제하기</a></td>
+                    <td class="del_chk"><input type="checkbox" name="delList" value="${item.postId}"></td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -45,37 +46,58 @@
 		alert(msg);
 	}
 
-	$(".del_btn").hide();
-
+	//삭제-취소 숨기기/보이기
+	$("#cancel_btn").hide();
+	$(".del_chk").hide();
+	
 	function getDelBtn(){
-		$(".del_btn").show();	
+		$("#cancel_btn").show();
+		$(".del_chk").show();
 	}
 	
 	function cancel_del(){
-		$(".del_btn").hide();
+		$("#cancel_btn").hide();
+		$(".del_chk").hide();
 	}
 
-	function del(postId){
-		if(confirm("글을 삭제하시겠습니까?") == true){
-			$.ajax({
-				url:'delPost',
-	            type:'GET',
-	            data : {"postId" : postId},
-	            dataType:'JSON',
-	            success:function(data){
-	                 if(data.success > 0){
-	                	 alert("글 삭제가 완료되었습니다.");
-	                	 location.reload(true);
-	                 }else{
-	                	 alert("글 삭제에 실패했습니다.");
-	                 }
-	            },
-	            error:function(e){
-	               console.log("에러발생 : ", e);
-	            }
-	       	});
-		}else{
+	
+	//선택삭제 버튼 클릭 시 삭제 실행
+	function delPost(){
+		var chkArr = $("input[type='checkbox']:checked");
+		console.log(chkArr);
+		console.log("chkArr length : "+chkArr.length);
+		if(chkArr.length <= 0){
+			alert("삭제할 글을 체크해주세요.");
 			return;
+		}else{
+			if(confirm("글을 삭제하시겠습니까?") == true){
+				var delArr = [];
+				chkArr.each(function(idx, item){
+					console.log("delArr에 들어감 : "+$(this).val());
+					delArr.push($(this).val());
+				});
+				console.log(delArr);
+				
+				$.ajax({
+					url:'delPost',
+		            type:'GET',
+		            data : {"delArr" : delArr},
+		            dataType:'JSON',
+		            success:function(data){
+		                 if(data.success > 0){
+		                	 alert("글 삭제가 완료되었습니다.");
+		                	 location.reload(true);
+		                 }else{
+		                	 alert("글 삭제에 실패했습니다.");
+		                 }
+		            },
+		            error:function(e){
+		               console.log("에러발생 : ", e);
+		            }
+		       	});
+			}else{
+				return;
+			}
 		}
 	}
 </script>
