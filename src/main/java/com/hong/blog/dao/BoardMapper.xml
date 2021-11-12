@@ -15,8 +15,8 @@
 	</delete>
 	
 	<insert id="write" parameterType="com.hong.blog.dto.BoardDTO">
-		INSERT INTO post(postId, title, postContent, userId, categoryId) 
-		VALUES(get_seq('post'), #{title}, #{postContent}, #{userId}, 5)
+		INSERT INTO post(title, postContent, userId, categoryId) 
+		VALUES(#{title}, #{postContent}, #{userId}, 5)
 		<selectKey resultType="int" keyProperty="postId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
