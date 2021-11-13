@@ -11,6 +11,7 @@
 <body>
 	<button id="write_btn" type="button" onclick="location.href='writeForm'">글쓰기</button>
 	<button id="get_del_btn" type="button" onclick="getDelBtn()">포스팅 삭제</button>
+	<button id="chk_all_btn" type="button" onclick="chkAllPost()">전체선택</button>
 	<button id="delete_btn" type="button" onclick="delPost()">선택삭제</button>
 	<button id="cancel_btn" type="button" onclick="cancel_del()">취소</button>
 	<table>
@@ -49,15 +50,33 @@
 	//삭제-취소 숨기기/보이기
 	$("#cancel_btn").hide();
 	$(".del_chk").hide();
+	$("#delete_btn").hide();
+	$("#chk_all_btn").hide();
 	
 	function getDelBtn(){
+		$("#get_del_btn").hide();
+		
+		$("#delete_btn").show();
 		$("#cancel_btn").show();
 		$(".del_chk").show();
+		$("#chk_all_btn").show();
 	}
 	
 	function cancel_del(){
+		$("#get_del_btn").show();
+		
 		$("#cancel_btn").hide();
+		$("#delete_btn").hide();
 		$(".del_chk").hide();
+		$("#chk_all_btn").hide();
+		
+		var chkArr = $("input[type='checkbox']:checked");
+		chkArr.prop('checked', false);
+	}
+	
+	function chkAllPost(){
+		var chkboxes = $("input[type='checkbox']");
+		chkboxes.prop('checked', true);
 	}
 
 	
@@ -80,8 +99,9 @@
 				
 				$.ajax({
 					url:'delPost',
-		            type:'GET',
+		            type:'POST',
 		            data : {"delArr" : delArr},
+		            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		            dataType:'JSON',
 		            success:function(data){
 		                 if(data.success > 0){
