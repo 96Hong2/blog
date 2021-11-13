@@ -23,7 +23,7 @@
                 <th>조회수</th>
                 <th>작성자</th>
                 <th>카테고리</th>
-            	<th class="del_btn">삭제</th>
+            	<th class="del_chk">삭제</th>
             </tr>
         </thead>
         <tbody>

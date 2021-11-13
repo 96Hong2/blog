@@ -9,7 +9,7 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> getPostList();
 
-	int delPost(int postId);
+	int delPost(ArrayList<Integer> delList);
 
 	int write(BoardDTO dto);
 

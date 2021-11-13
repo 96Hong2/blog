@@ -10,8 +10,14 @@
 		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post ORDER BY regDate DESC
 	</select>
 	
-	<delete id="delPost">
-		DELETE FROM post WHERE postId=#{param1}
+	<delete id="delPost" parameterType="java.util.ArrayList">
+		DELETE FROM post
+		<where>
+			postId IN
+			<foreach collection="list" item="item" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+		</where>
 	</delete>
 	
 	<insert id="write" parameterType="com.hong.blog.dto.BoardDTO">

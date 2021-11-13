@@ -28,8 +28,7 @@ public class BoardService {
 
 	public HashMap<String, Object> delPost(ArrayList<Integer> delList) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int success = delList.get(0);
-		//int success = dao.delPost(delList);
+		int success = dao.delPost(delList);
 		logger.info("success : {}",success);
 		map.put("success", success);
 		return map;

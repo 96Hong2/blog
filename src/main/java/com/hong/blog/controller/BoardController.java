@@ -51,7 +51,6 @@ public class BoardController {
 	}
 	
 	//게시글의 번호를 받아 해당 게시글을 삭제하는 메소드
-	@SuppressWarnings("null")
 	@RequestMapping(value = "/delPost", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> delPost(@RequestParam(value="delArr[]") ArrayList<String> delArr) {
