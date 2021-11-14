@@ -150,7 +150,11 @@
 			//현재 로그인된 아이디와 댓글쓴이가 같은 지 확인 
 			var check = (loginId == item.userId);
 			
-			if(item.cmtDepth == 'C'){ //일반댓글인 경우
+			if(item.isDel == 'Y'){
+				content += "<p>삭제된 댓글입니다.</p>";
+				
+			}else if(item.cmtDepth == 'C'){ 
+				//일반댓글인 경우
 				content += "<div class='updateCheck'>"
 				+ "<p>" + item.cmtWriterNick + "</p>"
 				+ "<p>" + item.cmtContent + "</p>"
@@ -211,14 +215,41 @@
 	
 	//댓글을 작성하는 함수
 	function writeComment(){
+		$(".invalid-fb").hide();
+		
 		var cmtContent = $("#newCmtContent").val().trim(); //내용
 		var writer = $("#newCmtWriter").val().trim(); //댓글쓴이
 		
-		if(cmtContent == null){
+		if(cmtContent.length == 0){
+			alert("댓글 내용을 입력해주세요!");
 			$(".invalid-fb").show();
 			return;
 		}else{
-			alert(writer+" / "+cmtContent);
+			$.ajax({
+				type: 'POST',
+				url: 'cmtWrite',
+				data: {
+					"cmtContent" : cmtContent,
+					"postId" : postId,
+					"cmtWriter" : writer
+				},
+				dataType: 'JSON',
+				success: function(data){
+					if(data.success > 0){
+						alert("댓글 등록에 성공했습니다.");
+						//댓글작성란 초기화
+						$("#newCmtContent").val("");
+						//댓글창 리로드
+						getComments(1);
+					}else{
+						alert("댓글을 등록하지 못했습니다.");
+					}
+				},
+				error: function(e){
+					console.log("댓글 작성 실패 :"+e);
+					alert("댓글을 등록하지 못했습니다.");
+				}
+			});
 		}
 	}
 	

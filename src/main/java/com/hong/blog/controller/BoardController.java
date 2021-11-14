@@ -1,6 +1,5 @@
 package com.hong.blog.controller;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,14 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hong.blog.dto.BoardDTO;
+import com.hong.blog.dto.commentDTO;
 import com.hong.blog.service.BoardService;
 
 
@@ -115,4 +115,15 @@ public class BoardController {
 		logger.info("댓글 페이지 : " + page);
 		return service.getComments(postId, page, session);
 	}
+	
+	//댓글 작성 메소드
+	@RequestMapping(value = "/cmtWrite", method = RequestMethod.POST)
+    public @ResponseBody HashMap<String, Object> cmtWrite(@ModelAttribute commentDTO dto) {
+        logger.info("댓글 작성 요청 ");
+        logger.info("댓글 작성자 : "+dto.getCmtWriter());
+        logger.info("글번호 : "+dto.getPostId());
+        logger.info("댓글 내용 : "+dto.getCmtContent());
+        
+       return service.cmtWrite(dto);
+    }
 }

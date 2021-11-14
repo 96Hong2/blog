@@ -52,4 +52,9 @@
 	<select id="allCount" resultType="int">
 		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N' AND postId = #{param1}
 	</select>
+	
+	<insert id="cmtWrite" parameterType="com.hong.blog.dto.commentDTO">
+		INSERT INTO comments(cmtId, cmtContent, cmtWriter, postId, cmtDepth) 
+		VALUES(get_seq('comments'), #{cmtContent}, #{cmtWriter}, #{postId}, 'C')
+	</insert>
 </mapper>

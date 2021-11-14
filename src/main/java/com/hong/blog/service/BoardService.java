@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hong.blog.dao.BoardDAO;
 import com.hong.blog.dto.BoardDTO;
+import com.hong.blog.dto.commentDTO;
 
 @Service
 public class BoardService {
@@ -99,6 +100,20 @@ public class BoardService {
 		
 		map.put("pages", pages);
 		
+		return map;
+	}
+
+	public HashMap<String, Object> cmtWrite(commentDTO dto) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+        boolean success = false; 
+        
+        if(dao.cmtWrite(dto) > 0) {
+        	success = true;
+        }
+        logger.info("dto :"+dto);
+        logger.info("댓글 작성 성공 여부 : "+success);
+        map.put("success", success);
+        
 		return map;
 	}
 

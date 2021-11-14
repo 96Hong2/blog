@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.hong.blog.dto.BoardDTO;
+import com.hong.blog.dto.commentDTO;
 
 public interface BoardDAO {
 
@@ -22,6 +23,8 @@ public interface BoardDAO {
 	int allCount(int postId);
 
 	ArrayList<BoardDTO> getComments(int start, int postId);
+
+	int cmtWrite(commentDTO dto);
 
 
 }
