@@ -54,16 +54,15 @@
 	<div class="commentZone">
 		<c:if test="${not empty sessionScope.loginId}">
 			<div class="cmtWriteArea">
-				<input type="hidden" name="newCntWriter" value="${sessionScope.loginId}">
-				<textarea name="newCmtContent" placeholder="댓글을 입력해주세요."></textarea>
+				<input type="hidden" id="newCmtWriter" value="${sessionScope.loginId}">
+				<textarea id="newCmtContent" placeholder="댓글을 입력해주세요."></textarea>
 				<div class="invalid-fb">1자 이상 입력해주세요.</div>
-				<label for="newCmtContent">300자 이내로 입력해주세요.</label>
-				<button id="cmtWriteBtn">등록</button>
+				<button id="cmtWriteBtn" onclick="writeComment()">등록</button>
 			</div>
 		</c:if>
 		<br/>
 		
-		<div class="cmtList">
+		<div id="cmtList">
 			<div class="comment">
 				<span>$작성자</span>&nbsp;<span>$댓글내용</span>&nbsp;<span>$2021-11-14</span>
 				
@@ -100,11 +99,100 @@
 	}
 	
 	var postId = "${post.postId}";
-	getComments();
+	getComments(1);
 	
-	function getComments(){
-		//$(".cmtList").empty();
-		//$(".pagination").empty();
+	$(".invalid-fb").hide(); //빈 댓글 작성 시 피드백
+	
+	//댓글을 로드하는 함수
+	function getComments(currPage){
+		$("#pagination").twbsPagination('destroy');
+		
+		$.ajax({
+			type : "POST",
+			url : "getComments",
+			data : {
+				"postId" : postId,
+				"page" : currPage
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				//댓글이 있는 경우
+				if(data.list != null){
+					drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
+
+					$("#pagination").twbsPagination({
+						startPage : data.currPage, //시작페이지
+						totalPages : data.pages, //총 페이지 개수
+						visiblePages : 5,
+						initiateStartPageClick: false,
+						first : "<<", //처음, 이전, 다음, 마지막 페이지 표시
+						prev : "<",
+						next : ">",
+						last : ">>",
+						onPageClick : function(e, page){
+							//페이지 클릭이 일어나면
+							getComments(postId, page);
+						}
+					});
+				//댓글이 없는 경우
+				}else{
+					$("#pagination").twbsPagination({
+						startPage : 1, //시작페이지
+						totalPages : 1, //총 페이지 개수
+						visiblePages : 1,
+						initiateStartPageClick: false,
+						first : "<<",
+						prev : "<",
+						next : ">",
+						last : ">>",
+						onPageClick : function(e, page){
+							//페이지 클릭이 일어나면
+							console.log("댓글 없음");
+						}
+					});
+				}
+			},
+			error : function(e) {
+				console.log("ajax loadComments() 에러 : " + e);
+			}
+		})
+	} //end getComments()
+	
+	//댓글리스트를 브라우저에 그려주는 함수
+	function drawComments(list, loginId){
+		var content = "";
+		
+		list.forEach(function(item, idx){
+			//현재 로그인된 아이디와 댓글쓴이가 같은 지 확인 
+			var check = (loginId == item.userId);
+			
+			content += "<div class='updateCheck'>"
+			+ "<p class='toBold'>" + item.nickName + "</p>"
+			+ "<p class='cmtContent'>" + item.cmtContent;
+			
+			if(check){
+				content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
+				+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
+			}
+			
+			content += "</p><hr/></div><br/>";
+		});
+		$("#cmtList").empty();
+		$("#cmtList").append(content);
 	}
+	
+	//댓글을 작성하는 함수
+	function writeComment(){
+		var cmtContent = $("#newCmtContent").val(); //내용
+		var writer = $("#newCmtWriter").val(); //댓글쓴이
+		
+		if(cmtContent == null){
+			$(".invalid-fb").show();
+			return;
+		}else{
+			alert(writer+" / "+cmtContent)
+		}
+	}
+	
 </script>
 </html>

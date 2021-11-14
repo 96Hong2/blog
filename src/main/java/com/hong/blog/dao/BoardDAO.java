@@ -19,5 +19,9 @@ public interface BoardDAO {
 
 	int upHits(int postId);
 
+	ArrayList<BoardDTO> getComments(int start, int end, int postId);
+
+	int allCount(int postId);
+
 
 }

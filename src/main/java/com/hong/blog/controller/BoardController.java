@@ -4,6 +4,8 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +107,12 @@ public class BoardController {
 		return "redirect:/detail?postId="+postId;
 	}
 	
-	
+	//댓글 불러오기 메소드
+	@RequestMapping(value = "/getComments", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> getComments(@RequestParam int postId, @RequestParam int page, HttpSession session) {
+		logger.info("댓글 불러올 게시글 번호 : " + postId);
+		logger.info("댓글 페이지 : " + page);
+		return service.getComments(postId, page, session);
+	}
 }
