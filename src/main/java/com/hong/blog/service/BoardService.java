@@ -70,10 +70,10 @@ public class BoardService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int end = page*5;
-		int start = end-5+1;
+		int start = end-5;
 		int pages = 0;
 
-		ArrayList<BoardDTO> list = dao.getComments(start, end, postId); 
+		ArrayList<BoardDTO> list = dao.getComments(start, postId); 
 		
 		//테스트용으로 세션에 loginId저장
 		session.setAttribute("loginId", "hong");

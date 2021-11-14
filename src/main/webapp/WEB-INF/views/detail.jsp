@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Welcome! Hong's Blog</title>
 <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
+<script src="resources/js/jquery.twbsPagination.js"></script>
 <%
 	session.setAttribute("loginId", "hong");
 %>
@@ -54,6 +55,7 @@
 	<div class="commentZone">
 		<c:if test="${not empty sessionScope.loginId}">
 			<div class="cmtWriteArea">
+				<p>댓글 달기</p>
 				<input type="hidden" id="newCmtWriter" value="${sessionScope.loginId}">
 				<textarea id="newCmtContent" placeholder="댓글을 입력해주세요."></textarea>
 				<div class="invalid-fb">1자 이상 입력해주세요.</div>
@@ -61,28 +63,10 @@
 			</div>
 		</c:if>
 		<br/>
+		<hr/>
 		
 		<div id="cmtList">
-			<div class="comment">
-				<span>$작성자</span>&nbsp;<span>$댓글내용</span>&nbsp;<span>$2021-11-14</span>
-				
-			</div>
-			<button id="cmtUpdateBtn" type="button">수정</button>
-			<button id="cmtdeleteBtn" type="button">삭제</button>
-			<button id="replyBtn" type="button">답글달기</button>
 			
-			<div class="cmtUpdate">
-				<textarea name="cmtUpdateContent">$댓글내용</textarea>
-				<button type="button">수정완료</button>
-				<button type="button">취소</button>
-			</div>
-			
-			<div class="reply">
-				▶ <textarea name="repContent" placeholder="대댓글을 입력해주세요."></textarea>
-				<button type="button">등록</button>
-				<button type="button">취소</button>
-			</div>
-			<br/>
 		</div>
 		
 		<div class="pageContainer">
@@ -166,31 +150,75 @@
 			//현재 로그인된 아이디와 댓글쓴이가 같은 지 확인 
 			var check = (loginId == item.userId);
 			
-			content += "<div class='updateCheck'>"
-			+ "<p class='toBold'>" + item.nickName + "</p>"
-			+ "<p class='cmtContent'>" + item.cmtContent;
+			if(item.cmtDepth == 'C'){ //일반댓글인 경우
+				content += "<div class='updateCheck'>"
+				+ "<p>" + item.cmtWriterNick + "</p>"
+				+ "<p>" + item.cmtContent + "</p>"
+				+ "<p>" + item.cmtRegDate + "</p>"
+				+ "<button type='button' onclick='getReplyForm()'>답글달기</button>";
+				
+				if(check){
+					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
+					+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
+				}
+				
+				//댓글 수정 폼
+				content += "<div class='cmtUpdateForm' id='cmtUpdateForm'"+item.cmtId+">"
+				+ "<textarea name='cmtUpdateContent'>"+item.cmtContent+"</textarea>"
+				+ "<button type='button' onclick='cmtUpdate("+item.cmtId+")'>수정완료</button>"
+				+ "<button type='button' onclick='cancelUpdateForm'>취소</button>"
+				+ "</div>";
+				
+				//대댓글 폼
+				content += "<div class='replyForm' id='replyForm'"+item.cmtId+">"
+				+ "&nbsp; ▶ &nbsp;"
+				+ "<textarea name='repContent' placeholder='대댓글을 입력해주세요.'></textarea>"
+				+ "<button type='button' onclick='writeReply("+item.cmtId+")'>등록</button>"
+				+ "<button type='button' onclick='cancelReplyForm()'>취소</button>"
+				+ "</div>";
+				
+				content += "<hr/></div><br/>";
 			
-			if(check){
-				content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
-				+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
+			}else{
+				//대댓글인 경우
+				content += "<div class='updateCheck'>"
+				+ "<p>&nbsp; ▶ &nbsp;"
+				+ item.cmtWriterNick + "</p>"
+				+ "<p>" + item.cmtContent + "</p>"
+				+ "<p>" + item.cmtRegDate + "</p>";
+					
+				if(check){
+					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
+					+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
+				}
+				
+				//댓글 수정 폼
+				content += "<div class='cmtUpdateForm' id='cmtUpdateForm'"+item.cmtId+">"
+				+ "<textarea name='cmtUpdateContent'>"+item.cmtContent+"</textarea>"
+				+ "<button type='button' onclick='cmtUpdate("+item.cmtId+")'>수정완료</button>"
+				+ "<button type='button' onclick='cancelUpdateForm'>취소</button>"
+				+ "</div>";
+				
+				content += "<hr/></div><br/>";
 			}
-			
-			content += "</p><hr/></div><br/>";
 		});
 		$("#cmtList").empty();
 		$("#cmtList").append(content);
+		
+		$(".cmtUpdateForm").hide();
+		$(".replyForm").hide();
 	}
 	
 	//댓글을 작성하는 함수
 	function writeComment(){
-		var cmtContent = $("#newCmtContent").val(); //내용
-		var writer = $("#newCmtWriter").val(); //댓글쓴이
+		var cmtContent = $("#newCmtContent").val().trim(); //내용
+		var writer = $("#newCmtWriter").val().trim(); //댓글쓴이
 		
 		if(cmtContent == null){
 			$(".invalid-fb").show();
 			return;
 		}else{
-			alert(writer+" / "+cmtContent)
+			alert(writer+" / "+cmtContent);
 		}
 	}
 	

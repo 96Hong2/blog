@@ -41,7 +41,12 @@
 	</update>
 	
 	<select id="getComments" resultType="com.hong.blog.dto.commentDTO">
-		
+		SELECT cmtId, cmtContent, DATE_FORMAT(cmtRegDate, '%Y-%m-%d %H:%i:%s') as cmtRegDate, 
+		cmtWriter, (SELECT nickName FROM member WHERE userId=c.cmtWriter) as cmtWriterNick, 
+		cmtDepth, cmtParent, isDel FROM comments c 
+		WHERE postId=#{param2} AND isDel='N' 
+		ORDER BY IF(ISNULL(cmtParent), cmtId, cmtParent), cmtId 
+		LIMIT #{param1}, 5
 	</select>
 	
 	<select id="allCount" resultType="int">
