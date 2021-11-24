@@ -30,7 +30,7 @@ public class BoardController {
 	@Autowired BoardService service;
 	
 	//메인화면으로 이동
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String Home() {
 		logger.info("메인 화면으로 이동 요청");
 		return "home";

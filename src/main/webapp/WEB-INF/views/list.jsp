@@ -9,6 +9,7 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
+	<button type="button" onclick="location.href='home'">HOME</button>
 	<button id="write_btn" type="button" onclick="location.href='writeForm'">글쓰기</button>
 	<button id="get_del_btn" type="button" onclick="getDelBtn()">포스팅 삭제</button>
 	<button id="chk_all_btn" type="button" onclick="chkAllPost()">전체선택</button>
