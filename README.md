@@ -1,1 +1,1 @@
-# smilegate
+# blog
