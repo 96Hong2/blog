@@ -26,5 +26,7 @@ public interface BoardDAO {
 
 	int cmtWrite(commentDTO dto);
 
+	int del(int postId);
+
 
 }

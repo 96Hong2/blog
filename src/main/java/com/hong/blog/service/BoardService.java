@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hong.blog.dao.BoardDAO;
@@ -115,6 +116,17 @@ public class BoardService {
         map.put("success", success);
         
 		return map;
+	}
+
+	public String del(RedirectAttributes rAttr, int postId) {
+		int success = dao.del(postId);
+		logger.info("게시글 삭제 성공여부 : "+success);
+		if(success > 0) {
+			rAttr.addFlashAttribute("msg", "게시글 삭제가 완료되었습니다.");
+		}else {
+			rAttr.addFlashAttribute("msg", "게시글 삭제에 실패했습니다.");
+		}
+		return "redirect:/list";
 	}
 
 }

@@ -47,6 +47,7 @@
 			<td colspan = "2">
 				<button onclick="location.href='./list'">리스트</button>
 				<button onclick="location.href='./updateForm?postId=${post.postId}'">수정</button>
+				<button type="button" onclick="delPost()">삭제</button>
 			</td>
 		</tr>
 	</table>
@@ -81,9 +82,17 @@
 	if(msg != ""){
 		alert(msg);
 	}
-	
+
 	var postId = "${post.postId}";
 	getComments(1);
+	
+	function delPost(){
+		if(confirm("게시글을 정말 삭제하시겠습니까?") == true){
+			location.href="./del?postId="+postId;
+		}else{
+			return;
+		}
+	}
 	
 	$(".invalid-fb").hide(); //빈 댓글 작성 시 피드백
 	

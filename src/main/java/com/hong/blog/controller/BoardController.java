@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hong.blog.dto.BoardDTO;
@@ -66,6 +67,13 @@ public class BoardController {
 		}
 		logger.info("delList 크기 : "+delList.size());
 		return service.delPost(delList);
+	}
+	
+	//게시글 상세보기에서 게시글 삭제
+	@RequestMapping(value = "/del", method = RequestMethod.GET)
+	public String del(RedirectAttributes rAttr,@RequestParam int postId) {
+		logger.info("게시글 삭제 요청 : "+postId);
+		return service.del(rAttr, postId);
 	}
 	
 	//게시글을 작성하는 메소드

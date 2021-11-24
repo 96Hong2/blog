@@ -20,6 +20,10 @@
 		</where>
 	</delete>
 	
+	<delete id="del" parameterType="int">
+		DELETE FROM post WHERE postId=#{postId}
+	</delete>
+	
 	<insert id="write" parameterType="com.hong.blog.dto.BoardDTO">
 		INSERT INTO post(title, postContent, userId, categoryId) 
 		VALUES(#{title}, #{postContent}, #{userId}, 5)
