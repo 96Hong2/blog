@@ -134,4 +134,16 @@ public class BoardController {
         
        return service.cmtWrite(dto);
     }
+	
+	//대댓글 작성 메소드
+	@RequestMapping(value = "/replyWrite", method = RequestMethod.POST)
+    public @ResponseBody HashMap<String, Object> replyWrite(@ModelAttribute commentDTO dto) {
+        logger.info("대댓글 작성 요청 ");
+        logger.info("부모댓글번호 : "+dto.getCmtParent());
+        logger.info("대댓글 작성자 : "+dto.getCmtWriter());
+        logger.info("글번호 : "+dto.getPostId());
+        logger.info("대댓글 내용 : "+dto.getCmtContent());
+        
+       return service.replyWrite(dto);
+    }
 }

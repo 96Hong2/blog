@@ -185,7 +185,7 @@
 				//대댓글 폼
 				content += "<div class='replyForm' id='replyForm'"+item.cmtId+">"
 				+ "&nbsp; ▶ &nbsp;"
-				+ "<textarea name='repContent' placeholder='대댓글을 입력해주세요.'></textarea>"
+				+ "<textarea id='repContent' name='repContent' placeholder='대댓글을 입력해주세요.'></textarea>"
 				+ "<button type='button' onclick='writeReply("+item.cmtId+")'>등록</button>"
 				+ "<button type='button' onclick='cancelReplyForm()'>취소</button>"
 				+ "</div>";
@@ -230,7 +230,6 @@
 		var writer = $("#newCmtWriter").val().trim(); //댓글쓴이
 		
 		if(cmtContent.length == 0){
-			alert("댓글 내용을 입력해주세요!");
 			$(".invalid-fb").show();
 			return;
 		}else{
@@ -257,6 +256,56 @@
 				error: function(e){
 					console.log("댓글 작성 실패 :"+e);
 					alert("댓글을 등록하지 못했습니다.");
+				}
+			});
+		}
+	}
+	
+	function getReplyForm(){
+		$(".replyForm").show();
+	}
+	
+	function cancelReplyForm(){
+		if(confirm("대댓글 작성을 취소하시겠습니까?") == true){
+			$(".replyForm").hide();	
+		}else{
+			return;
+		}
+	}
+	
+	//대댓글 작성
+	function writeReply(cmtId){
+		var cmtContent = $("#repContent").val().trim(); //내용
+		var writer = $("#newCmtWriter").val().trim(); //댓글쓴이
+		
+		if(cmtContent.length == 0){
+			alert("대댓글 내용을 입력해주세요!");
+			return;
+		}else{
+			$.ajax({
+				type: 'POST',
+				url: 'replyWrite',
+				data: {
+					"cmtContent" : cmtContent,
+					"postId" : postId,
+					"cmtWriter" : writer,
+					"cmtParent" : cmtId
+				},
+				dataType: 'JSON',
+				success: function(data){
+					if(data.success > 0){
+						alert("  대댓글 등록에 성공했습니다.");
+						//댓글작성란 초기화
+						$("#repContent").val("");
+						//댓글창 리로드
+						getComments(1);
+					}else{
+						alert("대댓글을 등록하지 못했습니다.");
+					}
+				},
+				error: function(e){
+					console.log("대댓글 작성 실패 :"+e);
+					alert("대댓글을 등록하지 못했습니다.");
 				}
 			});
 		}

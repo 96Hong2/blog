@@ -129,4 +129,18 @@ public class BoardService {
 		return "redirect:/list";
 	}
 
+	public HashMap<String, Object> replyWrite(commentDTO dto) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+        boolean success = false; 
+        
+        if(dao.replyWrite(dto) > 0) {
+        	success = true;
+        }
+        logger.info("dto :"+dto);
+        logger.info("대댓글 작성 성공 여부 : "+success);
+        map.put("success", success);
+        
+		return map;
+	}
+
 }

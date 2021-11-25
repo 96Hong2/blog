@@ -61,4 +61,9 @@
 		INSERT INTO comments(cmtId, cmtContent, cmtWriter, postId, cmtDepth) 
 		VALUES(get_seq('comments'), #{cmtContent}, #{cmtWriter}, #{postId}, 'C')
 	</insert>
+	
+	<insert id="replyWrite" parameterType="com.hong.blog.dto.commentDTO">
+		INSERT INTO comments(cmtId, cmtContent, cmtWriter, postId, cmtDepth, cmtParent) 
+		VALUES(get_seq('comments'), #{cmtContent}, #{cmtWriter}, #{postId}, 'R', #{cmtParent})
+	</insert>
 </mapper>
