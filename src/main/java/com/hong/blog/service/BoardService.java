@@ -81,7 +81,9 @@ public class BoardService {
 		session.setAttribute("loginId", "hong");
 		
 		String loginId = (String) session.getAttribute("loginId");
+		//왜 안나올까?
 		logger.info("loginId 세션 : ", loginId);
+		map.put("loginId", loginId);
 		
 		//이 포스팅의 댓글 총 개수
 		int totalCnt = dao.allCount(postId);

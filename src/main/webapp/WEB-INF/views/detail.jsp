@@ -84,6 +84,7 @@
 	}
 
 	var postId = "${post.postId}";
+	var loginId = "${sessionScope.loginId}";
 	getComments(1);
 	
 	function delPost(){
@@ -111,7 +112,7 @@
 			success : function(data) {
 				//댓글이 있는 경우
 				if(data.list != null){
-					drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
+					drawComments(data.list, loginId); //댓글리스트를 브라우저에 그려준다
 
 					$("#pagination").twbsPagination({
 						startPage : data.currPage, //시작페이지
@@ -157,7 +158,8 @@
 		
 		list.forEach(function(item, idx){
 			//현재 로그인된 아이디와 댓글쓴이가 같은 지 확인 
-			var check = (loginId == item.userId);
+			var check = (loginId == item.cmtWriter);
+			console.log("loginId : "+loginId+"/"+"item.cmtWriter : "+item.cmtWriter);
 			
 			if(item.isDel == 'Y'){
 				content += "<p>삭제된 댓글입니다.</p>";
