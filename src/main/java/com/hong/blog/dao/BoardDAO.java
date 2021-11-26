@@ -30,5 +30,7 @@ public interface BoardDAO {
 
 	int replyWrite(commentDTO dto);
 
+	int cmtDelete(int cmtId);
+
 
 }

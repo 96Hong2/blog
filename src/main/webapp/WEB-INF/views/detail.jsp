@@ -162,8 +162,8 @@
 			console.log("loginId : "+loginId+"/"+"item.cmtWriter : "+item.cmtWriter);
 			
 			if(item.isDel == 'Y'){
-				content += "<p>삭제된 댓글입니다.</p>";
-				
+				content += "<div><p>삭제된 댓글입니다.</p>";
+				content += "<hr/></div><br/>";
 			}else if(item.cmtDepth == 'C'){ 
 				//일반댓글인 경우
 				content += "<div class='updateCheck'>"
@@ -269,6 +269,7 @@
 	
 	function cancelReplyForm(){
 		if(confirm("대댓글 작성을 취소하시겠습니까?") == true){
+			$("#repContent").val(""); //기존 작성되었던 내용 지우기
 			$(".replyForm").hide();	
 		}else{
 			return;
@@ -296,7 +297,7 @@
 				dataType: 'JSON',
 				success: function(data){
 					if(data.success > 0){
-						alert("  대댓글 등록에 성공했습니다.");
+						alert("대댓글 등록에 성공했습니다.");
 						//댓글작성란 초기화
 						$("#repContent").val("");
 						//댓글창 리로드
@@ -310,6 +311,34 @@
 					alert("대댓글을 등록하지 못했습니다.");
 				}
 			});
+		}
+	}
+	
+	//댓글 or 대댓글 삭제
+	function cmtDelete(cmtId){
+		if(confirm("댓글을 정말 삭제하시겠습니까?") == true){
+			$.ajax({
+				type: 'GET',
+				url: 'cmtDelete',
+				data: {
+					"cmtId" : cmtId
+				},
+				dataType: 'JSON',
+				success: function(data){
+					if(data.success > 0){
+						alert("댓글이 삭제되었습니다.");
+						getComments(1);
+					}else{
+						alert("댓글이 정상적으로 삭제되지 않았습니다.");
+					}
+				},
+				error: function(e){
+					console.log("댓글 삭제 실패 : "+e);
+					alert("댓글이 정상적으로 삭제되지 않았습니다.");
+				}
+			});
+		}else{
+			return;
 		}
 	}
 	

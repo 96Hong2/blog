@@ -146,4 +146,12 @@ public class BoardController {
         
        return service.replyWrite(dto);
     }
+	
+	//댓글 삭제 메소드
+	@RequestMapping(value = "/cmtDelete", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> cmtDelete(@RequestParam int cmtId){
+		logger.info("댓글 삭제 요청 : "+cmtId);
+		return service.cmtDelete(cmtId);
+	}
 }

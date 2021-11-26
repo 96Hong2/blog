@@ -145,4 +145,12 @@ public class BoardService {
 		return map;
 	}
 
+	public HashMap<String, Object> cmtDelete(int cmtId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.cmtDelete(cmtId);
+		logger.info("댓글 삭제 성공 여부 : "+success);
+		map.put("success", success);
+		return map;
+	}
+
 }
