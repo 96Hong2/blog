@@ -159,7 +159,7 @@
 		list.forEach(function(item, idx){
 			//현재 로그인된 아이디와 댓글쓴이가 같은 지 확인 
 			var check = (loginId == item.cmtWriter);
-			console.log("loginId : "+loginId+"/"+"item.cmtWriter : "+item.cmtWriter);
+			//console.log("loginId : "+loginId+"/"+"item.cmtWriter : "+item.cmtWriter);
 			
 			if(item.isDel == 'Y'){
 				content += "<div><p>삭제된 댓글입니다.</p>";
@@ -170,7 +170,7 @@
 				+ "<p>" + item.cmtWriterNick + "</p>"
 				+ "<p>" + item.cmtContent + "</p>"
 				+ "<p>" + item.cmtRegDate + "</p>"
-				+ "<button type='button' onclick='getReplyForm()'>답글달기</button>";
+				+ "<button type='button' onclick='getReplyForm("+item.cmtId+")'>답글달기</button>";
 				
 				if(check){
 					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
@@ -185,11 +185,11 @@
 				+ "</div>";
 				
 				//대댓글 폼
-				content += "<div class='replyForm' id='replyForm'"+item.cmtId+">"
+				content += "<div class='replyForm' id='replyForm"+item.cmtId+"'>"
 				+ "&nbsp; ▶ &nbsp;"
-				+ "<textarea id='repContent' name='repContent' placeholder='대댓글을 입력해주세요.'></textarea>"
+				+ "<textarea id='repContent"+item.cmtId+"' name='repContent' placeholder='대댓글을 입력해주세요.'></textarea>"
 				+ "<button type='button' onclick='writeReply("+item.cmtId+")'>등록</button>"
-				+ "<button type='button' onclick='cancelReplyForm()'>취소</button>"
+				+ "<button type='button' onclick='cancelReplyForm("+item.cmtId+")'>취소</button>"
 				+ "</div>";
 				
 				content += "<hr/></div><br/>";
@@ -211,7 +211,7 @@
 				content += "<div class='cmtUpdateForm' id='cmtUpdateForm'"+item.cmtId+">"
 				+ "<textarea name='cmtUpdateContent'>"+item.cmtContent+"</textarea>"
 				+ "<button type='button' onclick='cmtUpdate("+item.cmtId+")'>수정완료</button>"
-				+ "<button type='button' onclick='cancelUpdateForm'>취소</button>"
+				+ "<button type='button' onclick='cancelUpdateForm("+item.cmtId+")'>취소</button>"
 				+ "</div>";
 				
 				content += "<hr/></div><br/>";
@@ -263,14 +263,14 @@
 		}
 	}
 	
-	function getReplyForm(){
-		$(".replyForm").show();
+	function getReplyForm(cmtId){
+		$("#replyForm"+cmtId).show();
 	}
 	
-	function cancelReplyForm(){
+	function cancelReplyForm(cmtId){
 		if(confirm("대댓글 작성을 취소하시겠습니까?") == true){
-			$("#repContent").val(""); //기존 작성되었던 내용 지우기
-			$(".replyForm").hide();	
+			$("#repContent"+cmtId).val(""); //기존 작성되었던 내용 지우기
+			$("#replyForm"+cmtId).hide();
 		}else{
 			return;
 		}
@@ -278,7 +278,7 @@
 	
 	//대댓글 작성
 	function writeReply(cmtId){
-		var cmtContent = $("#repContent").val().trim(); //내용
+		var cmtContent = $("#repContent"+cmtId).val().trim(); //내용
 		var writer = $("#newCmtWriter").val().trim(); //댓글쓴이
 		
 		if(cmtContent.length == 0){
