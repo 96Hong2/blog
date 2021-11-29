@@ -153,4 +153,12 @@ public class BoardService {
 		return map;
 	}
 
+	public HashMap<String, Object> cmtUpdate(int cmtId, String cmtContent) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.cmtUpdate(cmtId, cmtContent);
+		logger.info("댓글 수정 성공 여부 : "+success);
+		map.put("success", success);
+		return map;
+	}
+
 }

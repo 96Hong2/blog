@@ -32,5 +32,7 @@ public interface BoardDAO {
 
 	int cmtDelete(int cmtId);
 
+	int cmtUpdate(int cmtId, String cmtContent);
+
 
 }

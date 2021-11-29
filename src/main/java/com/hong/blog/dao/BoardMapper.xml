@@ -70,4 +70,8 @@
 	<update id="cmtDelete" parameterType="int">
 		UPDATE comments SET isDel = 'Y' WHERE cmtId = #{cmtId}
 	</update>
+	
+	<update id="cmtUpdate">
+		UPDATE comments SET cmtContent = #{param2} WHERE cmtId = #{param1}
+	</update>
 </mapper>

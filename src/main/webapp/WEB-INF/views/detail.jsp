@@ -173,15 +173,15 @@
 				+ "<button type='button' onclick='getReplyForm("+item.cmtId+")'>답글달기</button>";
 				
 				if(check){
-					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
+					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+", \""+item.cmtContent+"\")'>수정</button>"
 					+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
 				}
 				
 				//댓글 수정 폼
-				content += "<div class='cmtUpdateForm' id='cmtUpdateForm'"+item.cmtId+">"
+				content += "<div class='cmtUpdateForm' id='cmtUpdateForm"+item.cmtId+"'>"
 				+ "<textarea name='cmtUpdateContent'>"+item.cmtContent+"</textarea>"
 				+ "<button type='button' onclick='cmtUpdate("+item.cmtId+")'>수정완료</button>"
-				+ "<button type='button' onclick='cancelUpdateForm'>취소</button>"
+				+ "<button type='button' onclick='cancelUpdateForm("+item.cmtId+")'>취소</button>"
 				+ "</div>";
 				
 				//대댓글 폼
@@ -203,12 +203,12 @@
 				+ "<p>" + item.cmtRegDate + "</p>";
 					
 				if(check){
-					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+")'>수정</button>"
+					content += "<button type='button' onclick='getUpdateForm("+item.cmtId+",\""+item.cmtContent+"\")'>수정</button>"
 					+ "<button type='button' onclick='cmtDelete("+item.cmtId+")'>삭제</button>";
 				}
 				
 				//댓글 수정 폼
-				content += "<div class='cmtUpdateForm' id='cmtUpdateForm'"+item.cmtId+">"
+				content += "<div class='cmtUpdateForm' id='cmtUpdateForm"+item.cmtId+"'>"
 				+ "<textarea name='cmtUpdateContent'>"+item.cmtContent+"</textarea>"
 				+ "<button type='button' onclick='cmtUpdate("+item.cmtId+")'>수정완료</button>"
 				+ "<button type='button' onclick='cancelUpdateForm("+item.cmtId+")'>취소</button>"
@@ -340,6 +340,44 @@
 		}else{
 			return;
 		}
+	}
+	
+	function getUpdateForm(cmtId, cmtContent){
+		console.log("#cmtUpdateForm"+cmtId);
+		$("#cmtUpdateForm"+cmtId).show();
+		$("#cmtUpdateForm"+cmtId+" textarea").val(cmtContent);
+	}
+	
+	function cancelUpdateForm(cmtId){
+		$("#cmtUpdateForm"+cmtId).hide();
+	}
+	
+	function cmtUpdate(cmtId){
+		var content = $("#cmtUpdateForm"+cmtId+" textarea").val();
+		
+		$.ajax({
+			type: 'POST',
+			url: 'cmtUpdate',
+			data: {
+				"cmtId" : cmtId,
+				"cmtContent" : content
+			},
+			dataType: 'JSON',
+			success: function(data){
+				if(data.success > 0){
+					alert("댓글이 수정되었습니다.");
+					getComments(1);
+				}else{
+					alert("댓글이 정상적으로 수정되지 않았습니다.");
+				}
+			},
+			error: function(e){
+				console.log("댓글 수정 실패 : "+e);
+				alert("댓글이 정상적으로 수정되지 않았습니다.");
+			}
+		});
+		
+		
 	}
 	
 </script>

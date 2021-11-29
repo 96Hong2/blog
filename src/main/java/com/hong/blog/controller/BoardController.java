@@ -154,4 +154,12 @@ public class BoardController {
 		logger.info("댓글 삭제 요청 : "+cmtId);
 		return service.cmtDelete(cmtId);
 	}
+	
+	//댓글 삭제 메소드
+	@RequestMapping(value = "/cmtUpdate", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> cmtUpdate(@RequestParam int cmtId, @RequestParam String cmtContent){
+		logger.info("댓글 수정 요청 : "+cmtId+" / "+cmtContent);
+		return service.cmtUpdate(cmtId, cmtContent);
+	}
 }
