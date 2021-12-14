@@ -31,7 +31,7 @@
             <c:forEach items="${list}" var="item">
                 <tr>
                     <td>${item.postId}</td>
-                    <td><a href="detail?postId=${item.postId}">${item.title}</a></td>
+                    <td><a href="detail?postId=${item.postId}">${item.title}(${item.cmtCnt})</a></td>
                     <td>${item.regDate}</td>
                     <td>${item.hits}</td>
                     <td>${item.userId}</td>

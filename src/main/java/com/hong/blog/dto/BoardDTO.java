@@ -9,7 +9,14 @@ public class BoardDTO {
 	private int hits;
 	private String userId;
 	private int categoryId;
+	private int cmtCnt;
 	
+	public int getCmtCnt() {
+		return cmtCnt;
+	}
+	public void setCmtCnt(int cmtCnt) {
+		this.cmtCnt = cmtCnt;
+	}
 	public int getPostId() {
 		return postId;
 	}

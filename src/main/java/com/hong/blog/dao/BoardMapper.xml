@@ -7,7 +7,9 @@
 <!-- XML 이 어떤interface 와 연결이 되는가? -->
 <mapper namespace="com.hong.blog.dao.BoardDAO">
 	<select id="getPostList" resultType="com.hong.blog.dto.BoardDTO">
-		SELECT postId, title, postContent, regDate, hits, userId, categoryId FROM post ORDER BY regDate DESC
+		SELECT postId, title, postContent, regDate, hits, userId, categoryId, 
+		(SELECT COUNT(cmtId) FROM comments WHERE postId=p.postId AND isDel='N') as cmtCnt
+		FROM post p ORDER BY regDate DESC
 	</select>
 	
 	<delete id="delPost" parameterType="java.util.ArrayList">
